@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proloqui AI — For Account Executives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #111118;
+    --bg-card: #16161f;
+    --bg-card-hover: #1c1c28;
+    --text-primary: #f0f0f5;
+    --text-secondary: #a0a0b8;
+    --text-muted: #6e6e85;
+    --accent: #9b6dff;
+    --accent-glow: rgba(155, 109, 255, 0.15);
+    --accent-subtle: rgba(155, 109, 255, 0.08);
+    --accent-bright: #b48aff;
+    --border: rgba(255, 255, 255, 0.06);
+    --gradient-1: linear-gradient(135deg, #9b6dff 0%, #6d4aff 100%);
+    --gradient-2: linear-gradient(135deg, #0a0a0f 0%, #16161f 100%);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 16px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.35rem; font-weight: 700;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    color: var(--text-secondary); text-decoration: none;
+    font-size: 0.9rem; font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-links a.active { color: var(--text-primary); }
+  .nav-cta {
+    padding: 10px 24px; background: var(--gradient-1);
+    color: white !important; border-radius: 8px;
+    font-weight: 600; font-size: 0.88rem;
+  }
+  .nav-cta:hover { opacity: 0.9; }
+
+  /* NAV DROPDOWN */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown > .nav-dropdown-trigger {
+    cursor: pointer; display: flex; align-items: center; gap: 4px;
+    color: var(--text-secondary); text-decoration: none;
+    font-size: 0.9rem; font-weight: 500; transition: color 0.2s;
+  }
+  .nav-dropdown > .nav-dropdown-trigger:hover { color: var(--text-primary); }
+  .nav-dropdown-arrow { font-size: 0.55rem; transition: transform 0.2s; margin-top: 1px; }
+  .nav-dropdown:hover .nav-dropdown-arrow { transform: rotate(180deg); }
+  .nav-dropdown-menu {
+    position: absolute; top: calc(100% + 12px); left: -16px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 0; min-width: 220px;
+    opacity: 0; visibility: hidden; transform: translateY(-4px);
+    transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+  .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .nav-dropdown-menu::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+  .nav-dropdown-menu a {
+    display: block; padding: 10px 20px; color: var(--text-secondary) !important;
+    font-size: 0.88rem; font-weight: 500; text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-dropdown-menu a:hover { background: var(--accent-subtle); color: var(--text-primary) !important; }
+  .nav-dropdown-menu .dropdown-desc { font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
+
+  /* HERO */
+  .hero {
+    padding: 160px 40px 100px;
+    text-align: center;
+    max-width: 840px;
+    margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: var(--accent-subtle);
+    border: 1px solid rgba(155, 109, 255, 0.2);
+    border-radius: 100px;
+    font-size: 0.82rem;
+    color: var(--accent-bright);
+    font-weight: 500;
+    margin-bottom: 24px;
+    letter-spacing: 0.03em;
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* SECTIONS */
+  section { padding: 100px 40px; }
+  .section-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .section-subtitle {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    line-height: 1.7;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* THE PROBLEM */
+  .problem-section { background: var(--bg-secondary); }
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .problem-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .problem-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+  .problem-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .problem-card p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* BEFORE / AFTER */
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 48px;
+  }
+  .ba-column {
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid var(--border);
+  }
+  .ba-column.before {
+    background: var(--bg-card);
+  }
+  .ba-column.after {
+    background: linear-gradient(135deg, rgba(155, 109, 255, 0.06) 0%, rgba(109, 74, 255, 0.03) 100%);
+    border-color: rgba(155, 109, 255, 0.15);
+  }
+  .ba-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+  .before .ba-tag {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+  .after .ba-tag {
+    background: rgba(52, 211, 153, 0.1);
+    color: #34d399;
+  }
+  .ba-column h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .ba-list { list-style: none; }
+  .ba-list li {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+  .ba-list li:last-child { border-bottom: none; }
+  .ba-list li span.icon { flex-shrink: 0; font-size: 0.9rem; margin-top: 2px; }
+  .before .ba-list li span.icon { color: #ef4444; }
+  .after .ba-list li span.icon { color: #34d399; }
+
+  /* SCENARIOS */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .scenario-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    transition: border-color 0.3s;
+  }
+  .scenario-card:hover {
+    border-color: rgba(155, 109, 255, 0.2);
+  }
+  .scenario-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--accent-subtle);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+  .scenario-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .scenario-card p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* BENEFITS */
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .benefit-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    transition: border-color 0.3s;
+  }
+  .benefit-card:hover {
+    border-color: rgba(155, 109, 255, 0.2);
+  }
+  .benefit-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--accent-subtle);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+  .benefit-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .benefit-card p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* QUOTE CALLOUT */
+  .callout {
+    background: linear-gradient(135deg, rgba(155, 109, 255, 0.08) 0%, rgba(109, 74, 255, 0.04) 100%);
+    border: 1px solid rgba(155, 109, 255, 0.15);
+    border-radius: 16px;
+    padding: 48px;
+    margin-top: 48px;
+    text-align: center;
+  }
+  .callout p {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+    font-style: italic;
+  }
+  .callout .attribution {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  /* OTHER PERSONAS */
+  .other-personas {
+    background: var(--bg-secondary);
+  }
+  .persona-link-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-top: 24px;
+    text-decoration: none;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .persona-link-card:hover {
+    border-color: rgba(155, 109, 255, 0.25);
+    transform: translateY(-2px);
+  }
+  .persona-link-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .persona-link-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  .persona-link-card .arrow {
+    font-size: 1.3rem;
+    color: var(--accent);
+    transition: transform 0.2s;
+  }
+  .persona-link-card:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 100px 40px;
+  }
+  .cta-section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .cta-section p {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+  .cta-form { max-width: 420px; margin: 0 auto; display: flex; gap: 10px; }
+  .cta-form input {
+    flex: 1; padding: 14px 18px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+  }
+  .cta-form input::placeholder { color: var(--text-muted); }
+  .cta-form input:focus { outline: none; border-color: var(--accent); }
+  .cta-form button {
+    padding: 14px 28px; background: var(--gradient-1);
+    border: none; border-radius: 8px; color: white;
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    font-weight: 600; cursor: pointer; white-space: nowrap;
+  }
+  .cta-form button:hover { opacity: 0.9; }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border);
+  }
+  footer p { font-size: 0.78rem; color: var(--text-muted); }
+  footer a { color: var(--text-muted); text-decoration: none; font-size: 0.78rem; }
+  footer a:hover { color: var(--text-secondary); }
+  .footer-links { display: flex; gap: 24px; }
+
+  /* HAMBURGER */
+  .hamburger {
+    display: none; background: none; border: none; cursor: pointer; padding: 4px; z-index: 101;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 2px; background: var(--text-primary);
+    margin: 5px 0; border-radius: 2px; transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  .mobile-menu {
+    display: none; position: fixed; top: 56px; left: 0; right: 0;
+    background: var(--bg-card); border-bottom: 1px solid var(--border);
+    padding: 16px 20px 20px; z-index: 99; flex-direction: column; gap: 4px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: var(--text-secondary); text-decoration: none; font-size: 0.95rem;
+    font-weight: 500; padding: 12px 0; border-bottom: 1px solid var(--border); transition: color 0.2s;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: var(--text-primary); }
+  .mobile-menu .mobile-section-label {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text-muted); padding: 16px 0 4px; font-weight: 600; border-bottom: none;
+  }
+  .mobile-menu .mobile-cta {
+    display: block; text-align: center; margin-top: 12px; padding: 12px 24px;
+    background: var(--gradient-1); color: white; border-radius: 8px;
+    font-weight: 600; font-size: 0.9rem; border-bottom: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 14px 20px; }
+    .nav-links { gap: 16px; }
+    .container { max-width: 100%; }
+  }
+  @media (max-width: 768px) {
+    .hero { padding: 120px 20px 60px; }
+    .hero h1 { font-size: 2.2rem; }
+    section { padding: 60px 20px; }
+    .problem-grid, .before-after, .scenario-grid { grid-template-columns: 1fr; }
+    .benefits-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 1.6rem; }
+    .cta-form { flex-direction: column; }
+    .cta-section h2 { font-size: 1.6rem; }
+    .cta-section p { font-size: 0.95rem; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .footer-links { justify-content: center; flex-wrap: wrap; }
+    .callout { padding: 32px 20px; }
+    .callout p { font-size: 1.05rem; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .hero { padding: 100px 20px 50px; }
+    .hero h1 { font-size: 1.8rem; }
+    .hero p { font-size: 1rem; }
+    .section-title { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Proloqui<span>.</span>AI</a>
+  <div class="nav-links">
+    <div class="nav-dropdown">
+      <a href="index.html#solutions" class="nav-dropdown-trigger">Solutions <span class="nav-dropdown-arrow">▼</span></a>
+      <div class="nav-dropdown-menu">
+        <a href="index.html#solutions">Overview<div class="dropdown-desc">How Proloqui works</div></a>
+        <a href="use-case-sdr.html">For SDRs & BDRs<div class="dropdown-desc">Automate research, book more meetings</div></a>
+        <a href="use-case-ae.html">For Account Executives<div class="dropdown-desc">Sharper context, faster closes</div></a>
+      </div>
+    </div>
+    <a href="index.html#features">Platform</a>
+    <a href="about.html">About</a>
+    <a href="index.html#contact" class="nav-cta">Get Early Access</a>
+  </div>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open');this.classList.toggle('active');" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu">
+  <div class="mobile-section-label">Solutions</div>
+  <a href="index.html#solutions">Overview</a>
+  <a href="use-case-sdr.html">For SDRs & BDRs</a>
+  <a href="use-case-ae.html">For Account Executives</a>
+  <div class="mobile-section-label">Company</div>
+  <a href="index.html#features">Platform</a>
+  <a href="about.html">About</a>
+  <a href="index.html#contact" class="mobile-cta">Get Early Access</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">For Account Executives</div>
+  <h1>Close bigger deals <em>with sharper context.</em></h1>
+  <p>You are not short on skills. You are short on time and context. Proloqui gives you the deep prospect intelligence and personalised messaging that turns pipeline into revenue.</p>
+</section>
+
+<!-- THE PROBLEM -->
+<section class="problem-section">
+  <div class="container">
+    <div class="section-label">The Reality</div>
+    <h2 class="section-title">Deals stall when context is thin</h2>
+    <p class="section-subtitle">The difference between a closed deal and a stalled one is often how well you understand your buyer's world. Most AEs are flying partially blind.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">🔍</div>
+        <div>
+          <h3>Surface-level prep</h3>
+          <p>You have 15 minutes before a call. A quick LinkedIn scan and a glance at the CRM is all you get. It is not enough to drive a meaningful conversation.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🧩</div>
+        <div>
+          <h3>Multi-threading is manual</h3>
+          <p>You know you need to engage multiple stakeholders. But crafting a tailored message for each one takes time you do not have across a full pipeline.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📧</div>
+        <div>
+          <h3>Follow-ups fall flat</h3>
+          <p>After a great call, the follow-up email is generic because you are already onto the next meeting. Momentum is lost in the gap between conversation and communication.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📊</div>
+        <div>
+          <h3>No view of what works</h3>
+          <p>Which email angles get champion responses? What messaging resonates with CFOs versus CTOs? You have instinct but not data.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section>
+  <div class="container">
+    <div class="section-label">The Shift</div>
+    <h2 class="section-title">What changes with Proloqui</h2>
+    <p class="section-subtitle">More context, better conversations, faster closes.</p>
+
+    <div class="before-after">
+      <div class="ba-column before">
+        <div class="ba-tag">Today</div>
+        <h3>Without Proloqui</h3>
+        <ul class="ba-list">
+          <li><span class="icon">✕</span> Last-minute prep with scattered notes and partial CRM data</li>
+          <li><span class="icon">✕</span> One-size-fits-all follow-ups that lose post-meeting momentum</li>
+          <li><span class="icon">✕</span> Multi-threading stalls because tailoring each message takes too long</li>
+          <li><span class="icon">✕</span> Champion enablement is ad hoc and inconsistent</li>
+          <li><span class="icon">✕</span> Deal intelligence lives in your head, not in a system</li>
+          <li><span class="icon">✕</span> No data on which messaging drives deal progression</li>
+        </ul>
+      </div>
+      <div class="ba-column after">
+        <div class="ba-tag">With Proloqui</div>
+        <h3>With Proloqui</h3>
+        <ul class="ba-list">
+          <li><span class="icon">✓</span> Deep, unified prospect intelligence ready before every conversation</li>
+          <li><span class="icon">✓</span> Contextual follow-ups drafted in seconds, referencing what was discussed</li>
+          <li><span class="icon">✓</span> Personalised outreach to every stakeholder in the buying committee</li>
+          <li><span class="icon">✓</span> Arm your champion with tailored content they can forward internally</li>
+          <li><span class="icon">✓</span> Account context captured, enriched, and actionable for the whole team</li>
+          <li><span class="icon">✓</span> Real performance data showing which approaches progress deals</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENARIOS -->
+<section style="background: var(--bg-secondary);">
+  <div class="container">
+    <div class="section-label">Where Proloqui Fits</div>
+    <h2 class="section-title">Built for the moments that matter</h2>
+    <p class="section-subtitle">Proloqui supports you at every stage of the deal cycle, not just prospecting.</p>
+
+    <div class="scenario-grid">
+      <div class="scenario-card">
+        <div class="scenario-icon">📞</div>
+        <h3>Pre-call preparation</h3>
+        <p>Get a complete picture of your prospect's company, priorities, recent news, and competitive landscape, synthesised and ready in seconds instead of scattered across ten tabs.</p>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-icon">✉️</div>
+        <h3>Post-meeting follow-up</h3>
+        <p>Turn meeting notes into sharp, personalised follow-ups that reinforce key points and keep momentum high. Send while the conversation is still fresh.</p>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-icon">👥</div>
+        <h3>Multi-threading outreach</h3>
+        <p>Engage the full buying committee with messages tailored to each stakeholder's role, priorities, and concerns. Scale the personal touch without the time cost.</p>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-icon">🏆</div>
+        <h3>Champion enablement</h3>
+        <p>Create content your champion can share internally. Tailored to their language, their stakeholders, and the business case they need to make.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section>
+  <div class="container">
+    <div class="section-label">The Impact</div>
+    <h2 class="section-title">Win more with less effort in the wrong places</h2>
+    <p class="section-subtitle">Spend your energy on strategy and relationships, not research and admin.</p>
+
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🎯</div>
+        <h3>Better conversations</h3>
+        <p>Walk into every call with the context to ask the right questions and connect your solution to what the buyer actually cares about.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <h3>Faster deal velocity</h3>
+        <p>Eliminate the gaps between meetings and follow-ups. Keep deals moving with timely, relevant communication at every touchpoint.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📈</div>
+        <h3>Higher win rates</h3>
+        <p>Deals are won on relevance. When every interaction demonstrates deep understanding of the buyer's world, you stand apart from the competition.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">👥</div>
+        <h3>Wider deal coverage</h3>
+        <p>Engage more stakeholders without proportionally more effort. Multi-thread every deal and reduce single-thread risk.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🧠</div>
+        <h3>Institutional intelligence</h3>
+        <p>Account insights are captured and enriched over time. When a deal spans months, nothing gets lost and every team member stays informed.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🛡️</div>
+        <h3>Brand-safe communication</h3>
+        <p>Every message is reviewed for compliance and quality before it reaches the buyer. Protect your reputation and your company's at every touchpoint.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p>"The best AEs do not just sell features. They deeply understand their buyer's world and connect the dots. Proloqui makes that possible at scale."</p>
+      <div class="attribution">Nathanial Rosney, CEO, Proloqui AI</div>
+    </div>
+  </div>
+</section>
+
+<!-- OTHER PERSONAS -->
+<section class="other-personas">
+  <div class="container">
+    <div class="section-label">Also Built For</div>
+    <h2 class="section-title">Explore other use cases</h2>
+
+    <a href="use-case-sdr.html" class="persona-link-card">
+      <div>
+        <h3>SDRs & BDRs</h3>
+        <p>Automate research and craft personalised outreach that books more meetings.</p>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2>Ready to close more, faster?</h2>
+  <p>Join the early access list and see how Proloqui transforms your deal execution.</p>
+  <form class="cta-form" action="https://formspree.io/f/mojnpgrg" method="POST">
+    <input type="email" name="email" placeholder="Your work email" required>
+    <button type="submit">Get Early Access</button>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; 2026 Proloqui AI Ltd</p>
+  <div class="footer-links">
+    <a href="about.html">About</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
